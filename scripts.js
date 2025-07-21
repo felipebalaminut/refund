@@ -96,6 +96,8 @@ function expenseAdd(newExpense) {
     // Adiciona o item na lista
     expenseList.append(expenseItem);
 
+    clearFields();
+
     updateTotals();
   } catch (error) {
     console.log(error);
@@ -149,4 +151,22 @@ function updateTotals() {
     console.log(error);
     alert("Não foi possível atualizar os dados");
   }
+}
+
+expenseList.addEventListener("click", (event) => {
+  if (event.target.classList.contains("remove-icon")) {
+    // Obtém a <li>, pai do elemento clicado
+    const item = event.target.closest(".expense");
+    item.remove();
+  }
+
+  updateTotals();
+});
+
+function clearFields() {
+  amount.value = "";
+  expense.value = "";
+  category.value = "";
+
+  expense.focus();
 }
