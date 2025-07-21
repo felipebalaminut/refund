@@ -6,6 +6,7 @@ const category = document.getElementById("category");
 
 // Selecionando os elementos da lista
 const expenseList = document.querySelector("ul");
+const expensesQuantity = document.querySelector("aside header p span");
 
 // Capturando evento de input
 amount.oninput = () => {
@@ -19,8 +20,8 @@ amount.oninput = () => {
   amount.value = formatCurrencyBRL(value);
 };
 
+// Formata no padrão BRL ()
 function formatCurrencyBRL(value) {
-  // Formata no padrão BRL ()
   value = value.toLocaleString("pt-br", {
     style: "currency",
     currency: "BRL",
@@ -45,11 +46,10 @@ form.onsubmit = (event) => {
     created_at: new Date(),
   };
 
-  console.log(newExpense);
-
   expenseAdd(newExpense);
 };
 
+// Adiciona uma novo item à lista
 function expenseAdd(newExpense) {
   try {
     // Cria a <li>
@@ -94,8 +94,28 @@ function expenseAdd(newExpense) {
 
     // Adiciona o item na lista
     expenseList.append(expenseItem);
+
+    updateTotals();
   } catch (error) {
     console.log(error);
     alert("Não foi possível atualizar a lista de despesas.");
+  }
+}
+
+// Atualiza os totais
+function updateTotals() {
+  try {
+    // Recupera todos os itens (li) da lista (ul)
+    const items = expenseList.children;
+
+    // Atualiza o valor de contagem das despesas
+    expensesQuantity.textContent = `${items.length} ${
+      items.length > 1 ? "despesas" : "despesa"
+    }`;
+
+    console.log(items.length);
+  } catch (error) {
+    console.log(error);
+    alert("Não foi possível atualizar os dados");
   }
 }
